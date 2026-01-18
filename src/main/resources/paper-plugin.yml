@@ -1,0 +1,9 @@
+name: KotlinPluginCore
+version: '${version}'
+description: '${description}'
+main: com.jifercraft.core.CorePlugin
+api-version: '1.21.4'
+author: JainaGam3r45
+website: https://www.jifercraft.com
+
+# Not using bootstrapper/loader for now
