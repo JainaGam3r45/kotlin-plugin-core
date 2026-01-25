@@ -1,0 +1,7 @@
+# Turn this on to see what the plugin is doing under the hood
+debug: false
+
+# Each module gets its own section here
+modules:
+  example:
+    welcome-message: "<green>Welcome back, <bold><player></bold>!</green>"
