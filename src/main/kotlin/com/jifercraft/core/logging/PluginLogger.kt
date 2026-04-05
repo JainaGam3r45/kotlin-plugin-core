@@ -13,18 +13,17 @@ class PluginLogger(private val plugin: CorePlugin) {
     var debugEnabled: Boolean = false
 
     fun info(message: String) {
-        plugin.componentLogger.info(prefixed(message, NamedTextColor.WHITE))
+        plugin.server.consoleSender.sendMessage(prefixed(message, NamedTextColor.WHITE))
     }
 
     fun warn(message: String) {
-        plugin.componentLogger.warn(prefixed(message, NamedTextColor.YELLOW))
+        plugin.server.consoleSender.sendMessage(prefixed(message, NamedTextColor.YELLOW))
     }
 
     fun error(message: String, throwable: Throwable? = null) {
+        plugin.server.consoleSender.sendMessage(prefixed(message, NamedTextColor.RED))
         if (throwable != null) {
-            plugin.componentLogger.error(prefixed(message, NamedTextColor.RED), throwable)
-        } else {
-            plugin.componentLogger.error(prefixed(message, NamedTextColor.RED))
+            plugin.logger.log(Level.SEVERE, "Exception traceback:", throwable)
         }
     }
 
@@ -32,7 +31,7 @@ class PluginLogger(private val plugin: CorePlugin) {
         if (!debugEnabled) return
         
         val debugPrefix = Component.text("[DEBUG] ", NamedTextColor.WHITE)
-        plugin.componentLogger.info(
+        plugin.server.consoleSender.sendMessage(
             prefix.append(debugPrefix).append(Component.text(message, NamedTextColor.WHITE))
         )
     }
@@ -45,7 +44,7 @@ class PluginLogger(private val plugin: CorePlugin) {
     }
 
     fun component(component: Component) {
-        plugin.componentLogger.info(prefix.append(component))
+        plugin.server.consoleSender.sendMessage(prefix.append(component))
     }
 
     private fun prefixed(message: String, color: NamedTextColor): Component {
