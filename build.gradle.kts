@@ -17,8 +17,8 @@ repositories {
 dependencies {
     compileOnly("io.papermc.paper:paper-api:$paperApiVersion")
 
-    // Paper API bundles the kotlin stdlib, but IntelliJ complains if we don't declare it here for editing
-    compileOnly(kotlin("stdlib"))
+    // Bundling kotlin stdlib inside the JAR so the plugin resolves it at runtime without relying on the server classloader
+    implementation(kotlin("stdlib"))
 }
 
 kotlin {
