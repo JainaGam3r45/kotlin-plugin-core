@@ -1,6 +1,14 @@
 # Turn this on to see what the plugin is doing under the hood
 debug: false
 
+# System messages and responses
+messages:
+  noPermission: "<red>You don't have permission to do this.</red>"
+  unknownSubcommand: "<red>Unknown subcommand. Type /core help for available commands.</red>"
+  reloadSuccess: "<green>Config & modules reloaded.</green>"
+  debugToggle: "<aqua>Debug mode is now {state}.</aqua>"
+  modulesList: "<gold>Loaded modules:</gold> <green>{count} active</green>"
+
 # Each module gets its own section here
 modules:
   example:

@@ -1,6 +1,8 @@
 package com.jifercraft.core.config
 
 import com.jifercraft.core.CorePlugin
+import net.kyori.adventure.text.Component
+import com.jifercraft.core.extension.MessageUtils
 import org.bukkit.configuration.ConfigurationSection
 import org.bukkit.configuration.file.YamlConfiguration
 import java.io.File
@@ -11,6 +13,26 @@ class PluginConfig(private val plugin: CorePlugin) {
     private lateinit var root: YamlConfiguration
     private val configs = mutableMapOf<String, YamlConfiguration>()
 
+    val messages = PluginMessages()
+
+    inner class PluginMessages {
+        lateinit var noPermission: Component
+        lateinit var unknownSubcommand: Component
+        lateinit var reloadSuccess: Component
+        
+        lateinit var debugToggleRaw: String
+        lateinit var modulesListRaw: String
+
+        fun load() {
+            noPermission = MessageUtils.parse(get("messages.noPermission", "<red>You don't have permission to do this.</red>"))
+            unknownSubcommand = MessageUtils.parse(get("messages.unknownSubcommand", "<red>Unknown subcommand. Type /core help for available commands.</red>"))
+            reloadSuccess = MessageUtils.parse(get("messages.reloadSuccess", "<green>Config & modules reloaded.</green>"))
+            
+            debugToggleRaw = get("messages.debugToggle", "<aqua>Debug mode is now {state}.</aqua>")
+            modulesListRaw = get("messages.modulesList", "<gold>Loaded modules:</gold> <green>{count} active</green>")
+        }
+    }
+
     // Kotlin properties are honestly so much cleaner than getters
     val file: File get() = File(plugin.dataFolder, "config.yml")
 
@@ -19,6 +41,7 @@ class PluginConfig(private val plugin: CorePlugin) {
             plugin.dataFolder.mkdirs()
         }
         root = loadFile("config.yml")
+        messages.load()
     }
 
     fun section(path: String): ConfigurationSection? {
