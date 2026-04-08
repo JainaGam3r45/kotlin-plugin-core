@@ -6,4 +6,10 @@ api-version: '1.21.4'
 author: JainaGam3r45
 website: https://www.jifercraft.com
 
-# Not using bootstrapper/loader for now
+permissions:
+  core.help:
+    default: true
+  core.reload:
+    default: op
+  core.debug:
+    default: op
